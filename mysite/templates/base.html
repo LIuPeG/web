@@ -1,0 +1,92 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{%static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'css/templatemo-style.css'%}">
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="fixed-header">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'index' %}">{{SITE_NAME}}</a>
+            </div>
+            <nav class="main-menu">
+                <ul>
+                     <li><a href="#home">Home</a></li>
+                    {% for column in column_list%}
+                    <li><a href="{{column}}">{{column}}</a></li>
+                    {%endfor%}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+{%block home_content%}
+{%endblock%}
+    {%block services_content%}
+    {%endblock%}
+    {%block clients_content%}
+    {%endblock%}
+    {%block external_block%}
+    {%endblock%}
+    {%block contact_content%}
+    {%endblock%}
+
+
+
+<div class="text-center footer">
+	<div class="container"><h1>{{SITE_DESC}}</h1>;</div>
+</div>
+
+<script src="{%static 'js/jquery.min.js'%}"></script>
+<script src="{%static 'js/bootstrap.min.js'}"></script>
+<script src="{%static 'js/jquery.singlePageNav.min.js'%}"></script>
+
+<script>
+
+// Check scroll position and add/remove background to navbar
+function checkScrollPosition() {
+    if($(window).scrollTop() > 50) {
+      $(".fixed-header").addClass("scroll");
+  } else {        
+      $(".fixed-header").removeClass("scroll");
+  }
+}
+
+$(document).ready(function () {   
+    // Single page nav
+    $('.fixed-header').singlePageNav({
+        offset: 59,
+        filter: ':not(.external)',
+        updateHash: true        
+    });
+
+    checkScrollPosition();
+
+    // nav bar
+    $('.navbar-toggle').click(function(){
+        $('.main-menu').toggleClass('show');
+    });
+
+    $('.main-menu a').click(function(){
+        $('.main-menu').removeClass('show');
+    });
+});
+
+$(window).on("scroll", function() {
+    checkScrollPosition();    
+});
+</script>
+</body>
+</html>

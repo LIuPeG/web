@@ -1,0 +1,19 @@
+{% extends "clients.html"%}
+{% load staticfiles %}
+{% block clients_content%}
+  <section class="col-md-12 content" id="clients">
+       <div class="col-lg-6 col-md-6 content-item">
+           <img src="{%static 'images/3.jpg'%}" alt="Image" class="tm-image">
+       </div>
+       <div class="col-lg-6 col-md-6 content-item background flexbox">
+           <h2 class="section-title">Our Clients</h2>
+
+           <div>
+               <button type="button" class="btn dark-blue-bordered-btn normal-btn">Small Button</button>
+               <button type="button" class="btn yellow-btn normal-btn">Download</button>
+               <button type="button" class="btn green-btn normal-btn">Demo</button>
+           </div>
+       </div>
+   </section>
+{% include "footer.html"%}
+{%endblock%}

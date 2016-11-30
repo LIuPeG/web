@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{%load staticfiles%}
+{%block services_content%}
+ <section class="col-md-12 content padding" id="services">
+        <div class="col-lg-6 col-md-6 col-md-push-6 content-item">
+           <img src="{%static 'images/2.jpg'%}" alt="Image" class="tm-image">
+       </div>
+       <div class="col-lg-6 col-md-6 col-md-pull-6 content-item background flexbox">
+
+           <h2 class="section-title">{{article.title}}</h2>
+           <p class="section-text">{{article.author}}</p>
+           <p>{{article.content}}</p>
+
+           <ul class="dark-blue-text">
+               {%for column in column_list%}
+               <li>{{column}}</li>
+               {%endfor%}
+           </ul>
+           <p>{{article.content}} </p>
+           <p>{{article.update_time}}</p>
+       </div>
+
+
+     {%endblock%}
