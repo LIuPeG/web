@@ -10,14 +10,19 @@
            <div class="col-lg-6 col-md-6 content-item content-item-1 background">
                <h2 class="main-title text-center dark-blue-text">{{SITE_NAME}}</h2>
                {%for article in article_list%}
-               <p>{{article.title}}</p>
-               <p>{{article.content | safe}}</p>
-               <p> by--{{article.author}}</p>
-
+               <p><h1>《{{article.title}}》</h1></p>
+               <p>正文：{{article.content | safe}}</p>
+               <p> <h3>作者：{{article.author}}<h3></p>
                {%endfor%}
-               <button type="button" class="btn btn-big dark-blue-bordered-btn">评论</button>
-               <button type="button" class="btn btn-big dark-blue-btn">点赞</button>
+               {%for comment in comment_list%}
+               <p>评论{{ forloop.counter }}：{{comment}}</p>
+               <p>用户：{{comment.user}} </p>
+               <p>发布时间：{{comment.pub_date|date:"Y-m-j,H:s"}}</p>
+               {%endfor%}
+               <button type="button" class="btn btn-big dark-blue-bordered-btn"><a href="{%url 'login'%}">登录</a></button>
+               <button type="button" class="btn btn-big dark-blue-btn"><a href="{%url 'reg'%}">注册</a></button>
            </div>
+
        </section>
 
 {%include "footer.html"%}

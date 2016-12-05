@@ -10,6 +10,8 @@ import datetime
 ###从django内置的一个user类继承
 @python_2_unicode_compatible
 class NewUser(AbstractUser):
+	avator=models.ImageField(upload_to="avator/%Y/%m",default="avator/default.png",max_length=200,blank=True,null=True,verbose_name="头像" )
+	qq = models.CharField(max_length=20,blank=True,null=True,verbose_name="QQ号码")
 	###username = models.CharField("username",max_length = 100)
 	###email = models.EmailField()
 	###password = models.CharField("password",max_length=16)
@@ -56,9 +58,9 @@ class Article(models.Model):
 
 ###文章需要的评论
 class Comment(models.Model):
-	user = models.ForeignKey("NewUser",null=True)
-	article = models.ForeignKey(Article,null=True)
-	content = models.TextField()
+	user = models.ForeignKey("NewUser",null=True,verbose_name="用户")
+	article = models.ForeignKey("Article",null=True,verbose_name="文章")
+	content = models.TextField(verbose_name="评论内容")
 	pub_date = models.DateTimeField(auto_now_add=True,editable=True)
 	
 	def __unicode__(self):
