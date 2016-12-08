@@ -1,5 +1,5 @@
 #coding=utf-8
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout,authenticate
 from django.conf import settings
@@ -48,7 +48,7 @@ def do_reg(request):
 				#登录
 				user.backend="django.contrib.auth.backends.ModelBackend"###指定默认的登录验证方式
 				login(request,user)
-				return redirect(request.POST.get("source_url"))
+				return HttpResponseRedirect(request.POST.get("index"))
 			else:
 				return render(request,"failure.html",{"reason":reg_form.errors})
 		else:
@@ -62,7 +62,7 @@ def add_user(request):
 		comment_form = CommentForm(request.POST)
 		if comment_form.is_valid():
 			comment_form.save()
-			return HttpResponse("添加评论成功")
+			return HttpResponseRedirect ("login")
 
 	else:
 		user_form = CommentForm()
@@ -75,13 +75,13 @@ def do_login(request):
 			if login_form.is_valid():
 				username = login_form.cleaned_data["username"]
 				password = login_form.cleaner_data["password"]
-				user = authenticate(username = username,password = password)###django提供的验证方法
-				if user is None:
+				user = authenticate(username=username,password=password)###django提供的验证方法
+				if user is not None:
 					user.backend = "django.contrib.auth.backendd.ModelBackend"
 					login(request,user)
 				else:
 					return render(request,"failure.html",{"reason":"登录验证失败"})
-				return redirect(request.POST.get("index"))
+				return HttpResponseRedirect(request.POST.get("index"))
 			else:
 				return render(request,"failure.html",{"reason":login_form.errors})
 		else:

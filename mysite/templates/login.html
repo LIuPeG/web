@@ -15,7 +15,7 @@
 			<h1>账号登录</h1>
 		</div>
 		<p>欢迎来到我的个人博客~</p>
-			<form>
+			<form action="{%url 'index'%}" method="POST">
 				<ul class="left-form">
                     {%csrf_token%}
 					<h3>Login:</h3>
@@ -27,8 +27,10 @@
                         <li>{{login_form.password}}
                             <div class="clear"> </div>
                         </li>
+
 						<h4>I forgot my Password!</h4>
 							<input type="submit"  value="登录" >
+
 					</div>
 					<div class="clear"> </div>
 				</ul>
