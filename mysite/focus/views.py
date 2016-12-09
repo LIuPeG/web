@@ -6,6 +6,8 @@ from django.conf import settings
 from focus.models import *
 from focus.forms import *
 from django.contrib.auth.hashers import make_password ###密码加密的处理方法
+from django.contrib.auth.decorators import login_required
+import pdb
 
 
 # Create your views here.
@@ -29,9 +31,11 @@ def services(request):
 	try:
 		column_list = Column.objects.all()
 		article = Article.objects.all()[1:0]
+		comment_list = Comment.objects.order_by("-pub_date")[:3]
 	except Exception as e:
 		print e
 	return render(request,"services.html",locals())
+
 
 def do_reg(request):
 	try:
@@ -39,7 +43,7 @@ def do_reg(request):
 			reg_form = RegForm(request.POST)
 			if reg_form.is_valid():
 				"""注册"""
-				user = User.objects.create(username=reg_form.cleaned_data["username"],
+				user = NewUser.objects.create(username=reg_form.cleaned_data["username"],
 				                           email = reg_form.cleaned_data["email"],
 				                           url = reg_form.cleaned_data["url"],
 				                           password =make_password(reg_form.cleaned_data["password"]),)
@@ -48,7 +52,7 @@ def do_reg(request):
 				#登录
 				user.backend="django.contrib.auth.backends.ModelBackend"###指定默认的登录验证方式
 				login(request,user)
-				return HttpResponseRedirect(request.POST.get("index"))
+				return HttpResponseRedirect(request.POST.get("source_url"))
 			else:
 				return render(request,"failure.html",{"reason":reg_form.errors})
 		else:
@@ -62,7 +66,7 @@ def add_user(request):
 		comment_form = CommentForm(request.POST)
 		if comment_form.is_valid():
 			comment_form.save()
-			return HttpResponseRedirect ("login")
+			return HttpResponseRedirect ("index")
 
 	else:
 		user_form = CommentForm()
@@ -71,24 +75,30 @@ def add_user(request):
 def do_login(request):
 	try:
 		if request.method == "POST":
-			login_form = LoginForm()
+			print "aaa"
+			login_form = LoginForm(request.POST)
+			print "bbb"
 			if login_form.is_valid():
+				print "ccc"
 				username = login_form.cleaned_data["username"]
-				password = login_form.cleaner_data["password"]
+				password = login_form.cleaned_data["password"]
 				user = authenticate(username=username,password=password)###django提供的验证方法
 				if user is not None:
-					user.backend = "django.contrib.auth.backendd.ModelBackend"
+					user.backend = "django.contrib.auth.backend.ModelBackend"
+					print "ddd"
 					login(request,user)
+					return HttpResponseRedirect(request.session['login_from'])#登录成功后重定向到之前的页面
 				else:
-					return render(request,"failure.html",{"reason":"登录验证失败"})
-				return HttpResponseRedirect(request.POST.get("index"))
+					print "eee"
+					return render(request, 'login.html', {"login_form":login_form, 'error': "password or username is not ture!"})
 			else:
 				return render(request,"failure.html",{"reason":login_form.errors})
 		else:
 			login_form = LoginForm()
+			request.session['login_from'] = request.META.get('HTTP_REFERER', '/')#记住get方法获得的页面，待会儿回到这个页面，没有就设置为主页
 	except Exception as e:
 		print e
-	return render(request,"login.html",locals())
+	return render(request,"login.html",{"login_form":login_form})
 
 #注销
 def do_logout(request):

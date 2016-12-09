@@ -1,3 +1,5 @@
+{% load staticfiles %}
+{%block home_content%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,5 +8,7 @@
 </head>
 <body>
 <h1>b不知道你弄得什么玩意儿</h1>
+<h2>{{login_form.errors}}</h2>
 </body>
 </html>
+{%endblock%}

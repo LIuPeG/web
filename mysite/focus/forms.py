@@ -21,8 +21,8 @@ class RegForm(forms.Form):
 	                           max_length=50, error_messages={"required": "Password不能为空", })
 
 class LoginForm(forms.Form):
-	username = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Username","required":"required"},),
+	username = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Username","required":"required","id":"uid"},),
 	                                                  max_length=50,error_messages={"required":"username不能为空",})
-	password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password","required":"required",}),
+	password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password","required":"required","id":"pwd",}),
 	                           max_length=50,error_messages={"required":"password不能为空",})
 
