@@ -16,7 +16,7 @@
 			<h1>注册一个新用户</h1>
 		</div>
 		<p>欢迎成为我的个人博客的新用户~</p>
-			<form action="{%url 'index'%}" method="POST">
+			<form action="{%url 'reg'%}" method="post">
 				<ul class="left-form">
 					<h2>New Account:</h2>
 						{%csrf_token%}
@@ -32,10 +32,6 @@
 							<a href="#" class="icon ticker"></a>
 								<div class="clear"> </div>
 						</li>
-						<li>{{reg_form.url}}
-						<a href="#" class="icon ticker"></a>
-								<div class="clear"> </div>
-						</li>
 						<li>
 							{%csrf_token%}
 							{{reg_form.password}}
@@ -48,7 +44,8 @@
 						<a href="#" class="icon into"></a>
 								<div class="clear"> </div>
 						</li>
-					<input type="submit" onClick="myFunction()" value="Create Account">
+					<input type="submit"  value="Create Account">
+					 <input type="hidden"name="source_url"value="{{request.META.HTTP_REFERER}}">
 						<div class="clear"> </div>
 				</ul>
 				<div class="clear"> </div>

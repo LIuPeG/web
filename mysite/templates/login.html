@@ -25,14 +25,15 @@
                         <li>{{login_form.username}}
                             <div class="clear"> </div>
                         </li>
-                        <li>{{login_form.password}}
+                        <li>
+							{%csrf_token%}
+							{{login_form.password}}
                             <div class="clear"> </div>
                         </li>
 
 						<h4>I forgot my Password!</h4>
-
 							<input type="submit"  value="登录" >
-
+							<input type="hidden"name="source_url"value="{{request.META.HTTP_REFERER}}">
 					</div>
 					<div class="clear"> </div>
 				</ul>
