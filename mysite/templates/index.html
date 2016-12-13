@@ -16,12 +16,12 @@
                  {%endfor%}
         {%if request.user.is_authenticated %}
                <p>亲爱的 {{user.username}}：你已经登录，快写点评论吧~</p>
-               <button type="button" class="btn btn-big dark-blue-bordered-btn"><a href="{%url 'add_user'%}">评论</a></button>
-               <button type="button" class="btn btn-big dark-blue-btn"><a href="{%url 'logout'%}">注销</a></button>
+               <p><button type="button" class="btn btn-big dark-blue-bordered-btn"><a href="{%url 'add_user'%}">评论</a></button>
+              <button type="button" class="btn btn-big dark-blue-btn"><a href="{%url 'logout'%}">注销</a></button></p>
          {%else%}
                <p>亲，您还没有登录，请登录后再发表评论~</p>
-               <button type="button" class="btn btn-big dark-blue-bordered-btn"><a href="{%url 'login'%}">登录</a></button>
-               <button type="button" class="btn btn-big dark-blue-btn"><a href="{%url 'reg'%}">注册</a></button>
+              <p> <button type="button" class="btn btn-big dark-blue-bordered-btn"><a href="{%url 'login'%}">登录</a></button>
+              <button type="button" class="btn btn-big dark-blue-btn"><a href="{%url 'reg'%}">注册</a></button></p>
         {% endif %}
                {%for comment in comment_list%}
                <p>评论{{ forloop.counter }}：{{comment}}</p>

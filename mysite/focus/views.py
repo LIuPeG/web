@@ -72,7 +72,7 @@ def add_user(request):
 		comment_form = CommentForm(request.POST)
 		if comment_form.is_valid():
 			comment_form.save()
-			return HttpResponseRedirect (request.POST.get("source_url"))
+			return HttpResponseRedirect(request.POST.get("source_url"))
 
 	else:
 		user_form = CommentForm()
@@ -114,4 +114,4 @@ def do_logout(request):
 		logout(request)
 	except Exception as e:
 		print e
-	return render(request.POST.get("source_url"),"/")
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

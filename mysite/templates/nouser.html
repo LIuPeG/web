@@ -19,6 +19,7 @@
     <p>内容{{user_form.content}}</p>
 
     <input type="submit"value="提交"><br>
+       <input type="hidden"name="source_url"value="{{request.META.HTTP_REFERER}}">
 </form>
     <a href="javascript:void(0)" onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">
     关闭</a></div>

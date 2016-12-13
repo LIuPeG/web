@@ -58,7 +58,7 @@ class Article(models.Model):
 
 ###文章需要的评论
 class Comment(models.Model):
-	user = models.ForeignKey("NewUser",null=True,verbose_name="用户")
+	user = models.ForeignKey("NewUser",null=True,verbose_name="用户",default="NewUser")
 	article = models.ForeignKey("Article",null=True,verbose_name="文章")
 	content = models.TextField(verbose_name="评论内容")
 	pub_date = models.DateTimeField(auto_now_add=True,editable=True)
