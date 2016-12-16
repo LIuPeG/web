@@ -40,11 +40,9 @@ def services(request):
 def do_reg(request):
 	try:
 		if request.method == "POST":
-			print "aaa"
 			reg_form = RegForm(request.POST)
 			if reg_form.is_valid():
 				"""注册"""
-				print "bbb"
 				user = NewUser.objects.create(username=reg_form.cleaned_data["username"],
 				                           email = reg_form.cleaned_data["email"],
 				                           #profile = reg_form.cleaned_data["profile"],
@@ -53,7 +51,6 @@ def do_reg(request):
 
 				#登录
 				user.backend="django.contrib.auth.backends.ModelBackend"###指定默认的登录验证方式
-				print "ccc"
 				login(request,user)
 				print request.user
 				return HttpResponseRedirect(request.POST.get("source_url"))  # 登录成功后重定向到之前的页面
@@ -62,7 +59,6 @@ def do_reg(request):
 		else:
 			#request.session['reg_from'] = request.META.get('HTTP_REFERER', '/')
 			reg_form = RegForm()
-			print "eee"
 	except Exception as e:
 		print e
 	return  render(request,"reg.html",{"reg_form":reg_form})
@@ -81,22 +77,17 @@ def add_user(request):
 def do_login(request):
 	try:
 		if request.method == "POST":
-			print "aaa"
 			login_form = LoginForm(request.POST)
-			print "bbb"
 			if login_form.is_valid():
-				print "ccc"
 				username = login_form.cleaned_data["username"]
 				password = login_form.cleaned_data["password"]
 				user = authenticate(username=username,password=password)###django提供的验证方法
 				if user is not None and user.is_active:
 					#user.backend = "django.contrib.auth.backend.ModelBackend"
-					print "ddd"
 					login(request,user)
 
 					print bool(request.user.is_authenticated)
 				else:
-					print "eee"
 					return render(request, 'login.html', {"login_form":login_form, 'error': "password or username is not ture!"})
 				return redirect(request.session['login_from'])  # 登录成功后重定向到之前的页面
 			else:
